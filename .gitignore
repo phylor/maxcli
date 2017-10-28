@@ -1,0 +1,3 @@
+*.pyc
+venv/
+MaxSmart_CLI.egg-info/
