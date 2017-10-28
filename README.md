@@ -53,7 +53,7 @@ Note: not all of these commands are supported by the power plugs. They might onl
 | 251 | sets a rule | `sn`, `rule [ rname, en, time, spk, day, r, g, b, br ]` |
 | 253 | plays music (control == 0 replays, control == 2 pauses) | `type`, `control`, `url` |
 | 500 | `slave_url`? | `dev` |
-| 502 | returns the current time | |
+| 502 | returns the current time | `sn` |
 | 510 | returns the watt history | `sn`, `type` |
 | 511 | returns current watt and amp, and whether the relay is on or off | `sn` |
 | 512 | returns master and limit | |

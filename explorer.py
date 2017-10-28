@@ -4,6 +4,8 @@ import json
 import time
 import requests
 from requests import Request
+from datetime import datetime
+import time
 
 from maxsmart_http import MaxsmartHttp
 
@@ -14,13 +16,21 @@ class Device:
         self.sak = data['sak']
         self.ip = ip
 
+    def time(self):
+        response = MaxsmartHttp.send(self, 502)
+
+        return response.json()['data']['time']
+        
+
 class Explorer:
     def discover(self, broadcast_address):
         cs = socket(AF_INET, SOCK_DGRAM)
         cs.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
         cs.setsockopt(SOL_SOCKET, SO_BROADCAST, 1)
         
-        cs.sendto('00dv=all,2017-10-28,14:09:00,34;', (broadcast_address, 8888))
+        utc_offset = -time.timezone / 3600
+        now = datetime.now().strftime('%s,%s' % ('%Y-%m-%d,%H:%M:%S', utc_offset))
+        cs.sendto('00dv=all,%s;' % now, (broadcast_address, 8888))
         cs.setblocking(0)
 
         timeToWaitInSeconds = 2
@@ -46,11 +56,11 @@ class Explorer:
 
     def switch(self, device, status):
         new_state = 1 if status == 'on' else 0
-        options = {'sn': device.sn, 'port': '0', 'state': new_state}
+        options = {'port': '0', 'state': new_state}
 
         MaxsmartHttp.send(device, 200, options)
 
     def set_name(self, device, name):
-        options = {'sn': device.sn, 'port': '0', 'name': name}
+        options = {'port': '0', 'name': name}
 
         MaxsmartHttp.send(device, 201, options)
