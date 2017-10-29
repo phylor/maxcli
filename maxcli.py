@@ -66,3 +66,35 @@ def name(config, name):
 @config
 def time(config):
     click.echo(config.device.time())
+
+@device.command()
+@config
+@click.argument('datetime', required=False)
+def timer(config, datetime):
+    if datetime:
+        click.echo(config.device.set_timer(datetime))
+    else:
+        click.echo(config.device.timer())
+
+@device.command()
+@config
+def rules(config):
+    config.device.rules()
+
+@device.group()
+@config
+def rule(config):
+    pass
+
+@rule.command()
+@config
+@click.argument('time')
+@click.argument('state')
+def add(config, time, state):
+    config.device.add_rule(time, state)
+
+@rule.command()
+@config
+@click.argument('rule_id')
+def delete(config, rule_id):
+    config.device.delete_rule(rule_id)
