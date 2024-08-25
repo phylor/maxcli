@@ -2,6 +2,11 @@
 
 Maxcli is a command line interface for [MaxSmart](https://www.maxsmart.ch) appliances written in Python.
 
+## Other projects
+
+- More reverse engineering: https://github.com/altery/mh-maxsmart-powerstation
+- Python module: https://github.com/Superkikim/maxsmart
+
 ## Reverse Engineering MaxSmart Power Plugs
 
 Every power plug has an IP address. The power plugs can be discovered using a broadcasted UDP packet. They can be controlled using an HTTP interface exposed on port `80`. The HTTP interface is not secured in any way. The power plugs should therefore not be used in open networks.
